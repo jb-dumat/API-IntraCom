@@ -1,0 +1,6 @@
+[submodule "externals/boost"]
+	path = externals/boost
+	url = git@gitlab.com:neuratio/externals/boost
+[submodule "externals/yaml-cpp"]
+	path = externals/yaml-cpp
+	url = git@gitlab.com:neuratio/externals/yaml-cpp
