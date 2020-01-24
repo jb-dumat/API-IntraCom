@@ -6,3 +6,5 @@ cmake-build-debug
 CMakeFiles
 *.pyc
 *.o
+externals/boost
+externals/yaml-cpp

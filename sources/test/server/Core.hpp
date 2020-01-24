@@ -3,11 +3,10 @@
 #include <iostream>
 #include <string>
 #include "utils/ConfigLoader.hpp"
-#include "common/NetworkService.hpp"
-#include "common/ParocSessionManager.hpp"
+#include "NetworkService.hpp"
+#include "ServerManager.hpp"
 
 static const std::string configFilePath = "./config.yml";
-
 
 namespace paroc {
 
@@ -31,8 +30,8 @@ public:
 private:
 	ConfigLoader _config;
 	int _port;
-	NetworkService _service;
-	ParocSessionManager _manager;
+	net::NetworkService _service;
+	net::ServerManager _manager;
 };
 
 }

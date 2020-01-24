@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.8)
 
-project(paroc)
+project(neuracom)
 
 # Sanity check : Check that all submodules are present
 # =======================================================================
@@ -62,4 +62,4 @@ endfunction()
 
 enable_testing()
 add_subdirectory(externals)
-add_subdirectory(src)
+add_subdirectory(sources)

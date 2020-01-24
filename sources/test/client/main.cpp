@@ -1,14 +1,14 @@
 #include <iostream>
-#include "common/NetworkService.hpp"
-#include "common/ClientManager.hpp"
+#include "NetworkService.hpp"
+#include "ClientManager.hpp"
 
 int main(int argc, char *argv[])
 {
     std::cout << "[IHM] Starting..." << std::endl;
 
 	try {
-        NetworkService service;
-        ClientManager manager(service);
+        net::NetworkService service;
+        net::ClientManager manager(service);
 
         manager.newClient("127.0.0.1", 4242);
 

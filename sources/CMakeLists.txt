@@ -1,5 +1,5 @@
 # Enable modules to include each other's files
-include_directories(.)
+include_directories(. shared test)
 
 # Set compilation flags
 if (MSVC)
@@ -75,6 +75,5 @@ else()
 	endif()
 endif()
 
-add_subdirectory(common)
-add_subdirectory(client)
-add_subdirectory(server)
+add_subdirectory(shared)
+add_subdirectory(test)
