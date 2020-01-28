@@ -7,5 +7,3 @@ cmake-build-release
 CMakeFiles
 *.pyc
 *.o
-externals/boost
-externals/yaml-cpp

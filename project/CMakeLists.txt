@@ -73,4 +73,4 @@ else()
 endif()
 
 add_subdirectory(neuracom)
-add_subdirectory(test)
+#add_subdirectory(tests)
