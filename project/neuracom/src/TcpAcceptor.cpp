@@ -6,7 +6,7 @@ namespace net {
 
     }
 
-    bool TCPAcceptor::bind(int port) {
+    bool TCPAcceptor::bind(uint16_t port) {
         boost::asio::ip::tcp::endpoint endpoint(boost::asio::ip::tcp::v4(), port);
         try {
             _acceptor.open(endpoint.protocol());

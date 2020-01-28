@@ -34,7 +34,7 @@ namespace net {
         template<typename T>
         T *accept(const acceptCallback_t &callback);
 
-        bool bind(int);
+        bool bind(uint16_t);
 
         void close() { _acceptor.close(); }
 
