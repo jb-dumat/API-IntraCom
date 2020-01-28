@@ -1,6 +1,3 @@
-# Enable modules to include each other's files
-include_directories(. shared test)
-
 # Set compilation flags
 if (MSVC)
 	set(CMAKE_CONFIGURATION_TYPES Debug Release CACHE STRING "" FORCE)
@@ -75,5 +72,5 @@ else()
 	endif()
 endif()
 
-add_subdirectory(shared)
+add_subdirectory(neuracom)
 add_subdirectory(test)

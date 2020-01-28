@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.8)
 
-project(neuracom)
+project(neuracom VERSION 1.0.0 LANGUAGES CXX)
 
 # Sanity check : Check that all submodules are present
 # =======================================================================
@@ -42,7 +42,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
 # Output static library to lib/
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
 
-# Output shared library to lib/
+# Output neuracom library to lib/
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
 
 # Include source code
@@ -56,7 +56,7 @@ function(create_target_directory_groups target_name)
 	# the way.
 	source_group("Other Files" REGULAR_EXPRESSION ".")
 
-	get_target_property(target_sources "${target_name}" SOURCES)
+	get_target_property(target_sources "${target_name}" project)
 
 	foreach(file_name IN LISTS target_sources)
 		get_filename_component(dir_name "${file_name}" PATH)
@@ -68,4 +68,4 @@ endfunction()
 
 enable_testing()
 add_subdirectory(externals)
-add_subdirectory(sources)
+add_subdirectory(project)

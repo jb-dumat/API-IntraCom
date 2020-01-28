@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "TcpSocket.hpp"
+#include "../include/TcpSocket.hpp"
 
 namespace net {
     TCPSocket::TCPSocket(NetworkService &netService) : _socket(netService), _resolver(netService) {

@@ -7,8 +7,7 @@ add_executable(${TEST_CLIENT}
 
 create_target_directory_groups(${TEST_CLIENT})
 
-target_link_libraries(${TEST_CLIENT} PRIVATE sneuracom)
-target_link_libraries(${TEST_CLIENT} PRIVATE Boost::boost -pthread)
+target_link_libraries(${TEST_CLIENT} PRIVATE Boost::boost Neuratio::neuracom -pthread)
 
 if(UNIX AND NOT APPLE)
 	install(TARGETS ${TEST_CLIENT} RUNTIME DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
