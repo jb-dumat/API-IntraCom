@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../include/TcpAcceptor.hpp"
+#include "neuracom/TcpAcceptor.hpp"
 
 namespace net {
     TCPAcceptor::TCPAcceptor(NetworkService &netService) : _netService(netService), _acceptor(_netService) {

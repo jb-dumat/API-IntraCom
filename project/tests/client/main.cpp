@@ -1,6 +1,6 @@
 #include <iostream>
-#include "NetworkService.hpp"
-#include "ClientManager.hpp"
+#include "neuracom/NetworkService.hpp"
+#include "neuracom/ClientManager.hpp"
 
 int main(int argc, char *argv[])
 {

@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "../include/TcpSocket.hpp"
+#include "neuracom/TcpSocket.hpp"
 
 namespace net {
     TCPSocket::TCPSocket(NetworkService &netService) : _socket(netService), _resolver(netService) {

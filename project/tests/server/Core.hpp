@@ -3,8 +3,8 @@
 #include <iostream>
 #include <string>
 #include "utils/ConfigLoader.hpp"
-#include "NetworkService.hpp"
-#include "ServerManager.hpp"
+#include "neuracom/NetworkService.hpp"
+#include "neuracom/ServerManager.hpp"
 
 static const std::string configFilePath = "./config.yml";
 

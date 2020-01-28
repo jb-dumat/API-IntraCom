@@ -1,5 +1,5 @@
 #include <ctime>
-#include "../include/Interpreter.hpp"
+#include "neuracom/Interpreter.hpp"
 
 namespace net {
 /*
