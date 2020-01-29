@@ -4,7 +4,7 @@
 #include <string>
 #include "utils/ConfigLoader.hpp"
 #include "neuracom/NetworkService.hpp"
-#include "neuracom/ServerManager.hpp"
+#include "neuracom/SessionManager.hpp"
 
 static const std::string configFilePath = "./config.yml";
 

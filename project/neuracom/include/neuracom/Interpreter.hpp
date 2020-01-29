@@ -17,8 +17,7 @@ namespace net {
 
         Interpreter() = delete;
 
-        // Main functions
-        static std::vector<std::string> stringToVector(const std::string &payload, char separator);
+        static std::vector<std::string> stringToVector(const std::string &payload);
 
         static std::vector<std::string> parse(const std::string &str);
 
