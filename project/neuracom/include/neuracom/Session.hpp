@@ -20,13 +20,12 @@ namespace net {
 
         void readPayload(const char *data, size_t size) {
                 std::string msg(data, size);
-                std::string response;
 
                 // Log message
                 std::cout << std::hex << "> Received msg: " << data << std::endl;
 
-                auto args = net::Interpreter::parse(msg);
-                response = _interpreter.interpret(args);
+                auto&& args = net::Interpreter::parse(std::move(msg));
+                std::string&& response = _interpreter.interpret(std::move(args));
 
                 // Any cleaner solution ?
                 if (response == "DISCONNECT") {

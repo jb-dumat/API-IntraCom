@@ -17,11 +17,11 @@ namespace net {
 
         Interpreter() = delete;
 
-        static std::vector<std::string> stringToVector(const std::string &payload);
+        static std::vector<std::string> stringToVector(std::string&& payload);
 
-        static std::vector<std::string> parse(const std::string &str);
+        static std::vector<std::string> parse(std::string&& str);
 
-        std::string interpret(const std::vector<std::string>& args);
+        std::string interpret(std::vector<std::string>&& args);
 
     private:
         std::unordered_map<std::string, commandFunctor>& _commandMap;

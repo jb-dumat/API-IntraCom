@@ -14,23 +14,21 @@ namespace net {
  * Main functions
  */
 
-    std::vector<std::string> Interpreter::stringToVector(const std::string &payload) {
+    std::vector<std::string> Interpreter::stringToVector(std::string&& payload) {
         std::istringstream iss(payload);
-        std::vector<std::string> results(std::istream_iterator<std::string>{iss},
-                                         std::istream_iterator<std::string>());
-
-        return results;
+        return std::vector<std::string>(std::istream_iterator<std::string>{iss},
+                std::istream_iterator<std::string>());
     }
 
-    std::vector<std::string> Interpreter::parse(const std::string &str) {
-        return stringToVector(str);
+    std::vector<std::string> Interpreter::parse(std::string&& str) {
+        return stringToVector(std::forward<std::string>(str));
     }
 
-    std::string Interpreter::interpret(const std::vector<std::string> &args) {
+    std::string Interpreter::interpret(std::vector<std::string>&& args) {
         const static std::string errResponse = "No command found";
 
-        if (args.size() >= 1 && _commandMap.find(args[1]) != _commandMap.end()) {
-            return _commandMap[args[1]](args);
+        if (!args.empty() && _commandMap.find(args[0]) != _commandMap.end()) {
+            return _commandMap[args[0]](args);
         }
         return errResponse;
     }

@@ -14,7 +14,7 @@ option(NEURACOM_BUILD_SHARED_LIBS
 # By default, set the lib to "static", except if the user chose the option "neuracom"
 set(neuracom-type STATIC)
 if (NEURACOM_BUILD_SHARED_LIBS)
-	set(neuracom-type SHARED src/Server.cpp)
+	set(neuracom-type SHARED src/Server.cpp include/neuracom/ICore.hpp)
 endif()
 
 
