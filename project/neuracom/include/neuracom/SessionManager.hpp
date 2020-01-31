@@ -35,6 +35,10 @@ namespace net {
             _sessions.emplace_back(new Session(socket));
         }
 
+        uint16_t getPort() {
+            return _port;
+        }
+
     private:
         NetworkService &_ioContext;
         TCPAcceptor _acceptor;
