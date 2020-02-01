@@ -1,3 +1,7 @@
+//
+// Created by Jean-Baptiste Dumat.
+//
+
 #include <iostream>
 
 #include "neuracom/TcpSocket.hpp"

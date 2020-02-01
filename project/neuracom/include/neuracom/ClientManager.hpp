@@ -1,3 +1,7 @@
+//
+// Created by Jean-Baptiste Dumat.
+//
+
 #pragma once
 
 #include <iostream>
