@@ -1,68 +1,89 @@
 cmake_minimum_required(VERSION 3.8)
 
-project(neuracom VERSION 1.0.0 LANGUAGES CXX)
+####################
+#       BASIS      #
+####################
 
-# Sanity check : Check that all submodules are present
-# =======================================================================
+# Name of the project
+project(NEURACOM VERSION 1.0.0 LANGUAGES CXX)
 
-function(check_submodules_present)
-	file(READ "${PROJECT_SOURCE_DIR}/.gitmodules" gitmodules)
-	string(REGEX MATCHALL "path *= *[^ \t\r\n]*" gitmodules ${gitmodules})
-	foreach(module ${gitmodules})
-		string(REGEX REPLACE "path *= *" "" module ${module})
-		if (NOT EXISTS "${PROJECT_SOURCE_DIR}/${module}/.git")
-			message(FATAL_ERROR "Git submodule ${module} not found. "
-				"Please run: git submodule update --init --recursive")
-		endif()
-	endforeach()
-endfunction()
-check_submodules_present()
 
-# Configure C++ standard
-# ===========================
+####################
+#      OPTIONS     #
+####################
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+# Set it by adding "cmake -DNEURACOM_BUILD_SHARED_LIBS=[ON|OFF] [...]"
+option(NEURACOM_BUILD_SHARED_LIBS
+  "Build Neuracom shared library"
+  ${BUILD_SHARED_LIBS})
 
-# System imported libraries
-# ======================
-
-find_package(Boost 1.66.0 QUIET)
-if (NOT Boost_FOUND)
-	message(STATUS "Boost 1.66.0 or newer not found, falling back to externals")
-
-	set(BOOST_ROOT "${PROJECT_SOURCE_DIR}/externals/boost")
-	set(Boost_NO_SYSTEM_PATHS OFF)
-	find_package(Boost QUIET REQUIRED)
+# By default, set the lib to "static", except if the user chose the option "shared"
+set(neuracom-type STATIC)
+if (NEURACOM_BUILD_SHARED_LIBS)
+  set(neuracom-type SHARED)
 endif()
 
-# Output binaries to bin/
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
 
-# Output static library to lib/
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
+####################
+#      SOURCES     #
+####################
 
-# Include source code
-# ===================
+# Set the source files
+set(src-pattern "src/*.cpp")
+if (CMAKE_VERSION VERSION_GREATER 3.12)
+  list(INSERT src-pattern 0 CONFIGURE_DEPENDS)
+endif()
 
-# This function should be passed a list of all files in a target. It will automatically generate
-# file groups following the directory hierarchy, so that the layout of the files in IDEs matches the
-# one in the filesystem.
-function(create_target_directory_groups target_name)
-	# Place any files that aren't in the source list in a separate group so that they don't get in
-	# the way.
-	source_group("Other Files" REGULAR_EXPRESSION ".")
+file(GLOB neuracom-sources ${src-pattern})
 
-	get_target_property(target_sources "${target_name}" project)
 
-	foreach(file_name IN LISTS target_sources)
-		get_filename_component(dir_name "${file_name}" PATH)
-		# Group names use '\' as a separator even though the entire rest of CMake uses '/'...
-		string(REPLACE "/" "\\" group_name "${dir_name}")
-		source_group("${group_name}" FILES "${file_name}")
-	endforeach()
-endfunction()
+####################
+#    COMPILATION   #
+####################
 
-enable_testing()
-add_subdirectory(externals)
-add_subdirectory(project)
+# Add and compile the library
+add_library(neuracom ${neuracom-type} "")
+# Add an alias
+add_library(Neuratio::neuracom ALIAS neuracom)
+
+# Include libraries
+target_link_libraries(neuracom PRIVATE -pthread Boost::boost)
+
+# Include header files
+target_include_directories(neuracom
+  PUBLIC
+  $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+
+  PRIVATE
+  $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/src>)
+
+# Define the C++ standard
+if (NOT DEFINED CMAKE_CXX_STANDARD)
+  set_target_properties(neuracom
+    PROPERTIES
+    CXX_STANDARD 17)
+endif()
+
+# Define the compilation options/flags
+target_compile_options(neuracom
+  PRIVATE
+  -Wall -Wextra -Wshadow -Weffc++ -Wno-long-long
+  -pedantic -pedantic-errors)
+
+# Define the compilation source files
+target_sources(neuracom
+  PRIVATE
+  ${neuracom-sources})
+
+
+####################
+#    PROPERTIES    #
+####################
+
+# Set the library properties
+set_target_properties(neuracom PROPERTIES
+  VERSION "${PROJECT_VERSION}"
+  SOVERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}"
+  PROJECT_LABEL "neuracom $<IF:${build-shared},shared,static>"
+  DEBUG_POSTFIX d)

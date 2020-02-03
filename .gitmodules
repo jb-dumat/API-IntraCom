@@ -1,3 +1,0 @@
-[submodule "externals/boost"]
-	path = externals/boost
-	url = git@gitlab.com:neuratio/externals/boost.git
