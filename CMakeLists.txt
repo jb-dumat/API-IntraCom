@@ -47,6 +47,11 @@ add_library(neuracom ${neuracom-type} "")
 add_library(Neuratio::neuracom ALIAS neuracom)
 
 # Include libraries
+find_package(Boost 1.66.0 QUIET)
+if (NOT Boost_FOUND)
+  message(STATUS "Boost 1.66.0 or newer not found, you can try to install the external (it should be in a folder \"externals\" at the root of your project):")
+  message(FATAL_ERROR "\n\t git submodule add git@gitlab.com:neuratio/externals/boost externals/boost")
+endif()
 target_link_libraries(neuracom PRIVATE -pthread Boost::boost)
 
 # Include header files
