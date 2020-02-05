@@ -17,14 +17,24 @@ namespace net {
     class ClientManager {
     public:
         ClientManager(NetworkService &ioContext)
-                : _ioContext(ioContext) {}
+                : _ioContext(ioContext), _eventCb(nullptr)
+        {
 
-        void newClient(const std::string ip, int port) {
+        }
+
+        void newClient(const std::string ip, int port)
+        {
             _clients.emplace_back(new Client(_ioContext, ip, port));
+        }
+
+        void setEventCb(const std::function<void(const std::string& eventMsg)>& eventCb)
+        {
+            _eventCb = eventCb;
         }
 
     private:
         NetworkService &_ioContext;
         std::vector<std::unique_ptr<Client>> _clients;
+        std::function<void(const std::string&)> _eventCb;
     };
 }

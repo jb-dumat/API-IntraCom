@@ -29,7 +29,7 @@ endif()
 ####################
 
 # Set the source files
-set(src-pattern "src/*.cpp")
+set(src-pattern "src/*.cpp;include/neuracom/*.hpp")
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   list(INSERT src-pattern 0 CONFIGURE_DEPENDS)
 endif()

@@ -13,25 +13,37 @@
 #include "Interpreter.hpp"
 
 #include <thread>
+#include <utility>
 
 namespace net {
     class Client {
     public:
-        Client(NetworkService &ioContext, const std::string &ip, int port)
-                : _ioContext(ioContext), _socket(_ioContext), _inter(CLIENT_MAP) {
+        explicit Client(NetworkService &ioContext, const std::string &ip, int port)
+            : _ioContext(ioContext), _socket(_ioContext), _inter(CLIENT_MAP), _eventCb(nullptr)
+        {
+            _socket.connect(port, ip);
+            _socket.setReceive([&](const char *data, size_t size) { handleReceive(data, size); });
+        }
+
+        explicit Client(NetworkService &ioContext, const std::string &ip, int port, std::function<void(const std::string&)> eventCb)
+            : _ioContext(ioContext), _socket(_ioContext), _inter(CLIENT_MAP), _eventCb(std::move(eventCb))
+        {
             _socket.connect(port, ip);
             _socket.setReceive([&](const char *data, size_t size) { handleReceive(data, size); });
         }
 
         void handleReceive(const char *data, size_t size) {
             std::string msg(data, size);
-            std::string response;
 
-            std::cout << "> Received msg: " << data << std::endl;
+            if (_eventCb)
+                _eventCb("Received msg: " + msg);
 
             // Interpret the response
-            auto args = net::Interpreter::parse(msg);
-            response = _inter.interpret(args);
+            auto&& args = net::Interpreter::parse(std::move(msg));
+            auto&& response = _inter.interpret(std::move(args));
+
+            if (_eventCb)
+                _eventCb("Send msg: " + response);
         }
 
         static std::unordered_map<std::string, commandFunctor> CLIENT_MAP;
@@ -40,7 +52,6 @@ namespace net {
         NetworkService &_ioContext;
         TCPSocket _socket;
         Interpreter _inter;
+        std::function<void(const std::string&)>  _eventCb;
     };
-
-    std::unordered_map<std::string, net::commandFunctor> net::Client::CLIENT_MAP;
 }
