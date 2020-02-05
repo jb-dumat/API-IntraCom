@@ -21,15 +21,15 @@ namespace net {
         explicit Client(NetworkService &ioContext, const std::string &ip, int port)
             : _ioContext(ioContext), _socket(_ioContext), _inter(CLIENT_MAP), _eventCb(nullptr)
         {
-            _socket.connect(port, ip);
             _socket.setReceive([&](const char *data, size_t size) { handleReceive(data, size); });
+            _socket.connect(port, ip);
         }
 
         explicit Client(NetworkService &ioContext, const std::string &ip, int port, std::function<void(const std::string&)> eventCb)
             : _ioContext(ioContext), _socket(_ioContext), _inter(CLIENT_MAP), _eventCb(std::move(eventCb))
         {
-            _socket.connect(port, ip);
             _socket.setReceive([&](const char *data, size_t size) { handleReceive(data, size); });
+            _socket.connect(port, ip);
         }
 
         void handleReceive(const char *data, size_t size) {
