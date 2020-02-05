@@ -84,6 +84,20 @@ target_sources(neuracom
   PRIVATE
   ${neuracom-sources})
 
+add_executable(server-test
+      src/tests/server.cpp
+      src/tests/server.hpp
+)
+
+target_link_libraries(server-test Neuratio::neuracom)
+
+add_executable(client-test
+      src/tests/client.cpp
+      src/tests/client.hpp
+)
+
+target_link_libraries(client-test Neuratio::neuracom)
+
 
 ####################
 #    PROPERTIES    #
