@@ -22,9 +22,10 @@ namespace net {
 
         }
 
-        void newClient(const std::string ip, int port)
+        Client* newClient(const std::string ip, int port)
         {
             _clients.emplace_back(new Client(_ioContext, ip, port));
+            return _clients.back().get();
         }
 
         void setEventCb(const std::function<void(const std::string& eventMsg)>& eventCb)
