@@ -89,14 +89,23 @@ add_executable(server-test
       src/tests/server.hpp
 )
 
-target_link_libraries(server-test Neuratio::neuracom)
+set_target_properties(server-test
+        PROPERTIES
+        CXX_STANDARD 17)
+
+target_link_libraries(server-test Neuratio::neuracom Boost::boost)
 
 add_executable(client-test
       src/tests/client.cpp
       src/tests/client.hpp
 )
 
-target_link_libraries(client-test Neuratio::neuracom)
+set_target_properties(client-test
+      PROPERTIES
+      CXX_STANDARD 17
+)
+
+target_link_libraries(client-test Neuratio::neuracom Boost::boost)
 
 
 ####################

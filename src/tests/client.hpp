@@ -11,6 +11,7 @@
 #include <vector>
 #include <string>
 #include "config.hpp"
+#include <thread>
 
 std::unordered_map<std::string, std::function<std::string(const std::vector<std::string>&)>> net::Client::CLIENT_MAP;
 
@@ -24,13 +25,16 @@ public:
           _client(_service)
     {
         _client.setEventCb([&](const std::string& eventMsg) { cout << eventMsg << endl; });
+
+        net::Client::CLIENT_MAP["success"] = [&](const Paramters& args) { cout << "Connected" << endl; return "success"; };
+
+        std::thread t([&]() { _service.run(); });
+
         net::Client* client = _client.newClient(config::IP, config::PORT);
 
-        net::Client::CLIENT_MAP["success"] = [&](const Paramters& args) { cout << "Connected" << endl; return ""; };
+        client->manualSend("connection\n");
 
-        client.
-
-        _service.run();
+        t.join();
     }
 
 private:

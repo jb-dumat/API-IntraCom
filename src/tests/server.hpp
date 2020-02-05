@@ -28,6 +28,7 @@ public:
         net::Session::SERVER_MAP["ping"] =  [&](const Parameters& args) { cout << "Ping..." << endl; return "pong"; };
 
         _server.setEventCb([&](const std::string& eventMsg) { cout << eventMsg << endl; });
+        _server.launch();
         _service.run();
     }
 

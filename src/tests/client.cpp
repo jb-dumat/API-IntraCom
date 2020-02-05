@@ -10,5 +10,13 @@ using namespace std;
 
 int main() {
     cout << "Test client: " << endl;
+
+    try {
+        TestClient client;
+
+    } catch ( const std::exception& e) {
+        cerr << "Runtime error: " << e.what() << endl;
+    }
+
     return 0;
 }
