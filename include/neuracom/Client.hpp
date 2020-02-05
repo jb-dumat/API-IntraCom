@@ -46,6 +46,11 @@ namespace net {
                 _eventCb("Send msg: " + response);
         }
 
+        void manualSend(const std::string& msg)
+        {
+            _socket.send(msg);
+        }
+
         static std::unordered_map<std::string, commandFunctor> CLIENT_MAP;
 
     private:
