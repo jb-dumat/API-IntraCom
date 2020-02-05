@@ -51,6 +51,12 @@ namespace net {
             return _port;
         }
 
+        void sendAll(const std::string& msg) {
+            for (auto&session : _sessions) {
+                session->manualSend(msg);
+            }
+        }
+
     private:
         NetworkService &_ioContext;
         TCPAcceptor _acceptor;

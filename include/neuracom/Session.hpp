@@ -65,6 +65,10 @@ namespace net {
             _eventCb("Session " + std::to_string(reinterpret_cast<long>(_socket.get())) + " has disconnected");
         }
 
+        void manualSend(const std::string& msg) {
+            _socket->send(msg);
+        }
+
         static std::unordered_map<std::string, net::commandFunctor> SERVER_MAP;
 
     private:

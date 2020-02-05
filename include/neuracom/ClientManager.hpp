@@ -28,12 +28,6 @@ namespace net {
             return _clients.back().get();
         }
 
-        void sendAll(const std::string& msg) {
-            for (std::unique_ptr<Client>& client : _clients) {
-                client->manualSend(msg);
-            }
-        }
-
         void setEventCb(const std::function<void(const std::string& eventMsg)>& eventCb)
         {
             _eventCb = eventCb;
