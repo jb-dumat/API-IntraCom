@@ -35,16 +35,12 @@ namespace net {
         void handleReceive(const char *data, size_t size) {
             std::string msg(data, size);
 
-            std::cout << "received: " << msg << std::endl;
-
             if (_eventCb)
                 _eventCb("Received msg: " + msg);
 
             // Interpret the response
             auto&& args = net::Interpreter::parse(std::move(msg));
             auto&& response = _inter.interpret(std::move(args));
-
-            std::cout << "sent: " << response << std::endl;
 
             if (_eventCb)
                 _eventCb("Send msg: " + response);
