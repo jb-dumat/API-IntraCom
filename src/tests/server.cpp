@@ -9,14 +9,14 @@
 using namespace std;
 
 int main() {
-    cout << "Test server: " << endl;
+	cout << "Test server: " << endl;
 
-    try {
-        TestServer server;
+	try {
+		TestServer server;
 
-    } catch ( const std::exception& e) {
-        cerr << "Runtime error: " << e.what() << endl;
-    }
+	} catch (const std::exception& e) {
+		cerr << "Runtime error: " << e.what() << endl;
+	}
 
-    return 0;
+	return 0;
 }
