@@ -12,23 +12,27 @@
 #include <functional>
 
 namespace net {
-    using commandFunctor = std::function<std::string(const std::vector<std::string>& params)>;
+	using commandFunctor = std::function<std::string(const std::vector<std::string>& params)>;
 
-    class Interpreter
-    {
-    public:
-        explicit Interpreter(std::unordered_map<std::string, commandFunctor>& commandMap);
-        ~Interpreter() = default;
+	constexpr std::string_view ARGUMENT_WRAPPER_DEFAULT = "`";
 
-        Interpreter() = delete;
+	class Interpreter {
+	public:
+		explicit Interpreter(std::unordered_map<std::string, commandFunctor>& commandMap,
+		                     const std::string_view& wrapper = ARGUMENT_WRAPPER_DEFAULT);
 
-        static std::vector<std::string> stringToVector(std::string&& payload);
+		~Interpreter() = default;
 
-        static std::vector<std::string> parse(std::string&& str);
+		Interpreter() = delete;
 
-        std::string interpret(std::vector<std::string>&& args);
+		static std::vector<std::string> stringToVector(std::string&& payload);
 
-    private:
-        std::unordered_map<std::string, commandFunctor>& _commandMap;
-    };
+		static std::vector<std::string> parse(std::string&& str);
+
+		std::string interpret(std::vector<std::string>&& args);
+
+	private:
+		std::unordered_map<std::string, commandFunctor>& _commandMap;
+		const std::string_view _wrapper;
+	};
 }
