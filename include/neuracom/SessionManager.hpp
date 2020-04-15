@@ -16,14 +16,14 @@
 namespace net {
     class SessionManager {
     public:
-        SessionManager(NetworkService &ioContext, uint16_t port)
+        SessionManager(NetworkService& ioContext, uint16_t port)
                 : _ioContext(ioContext), _acceptor(_ioContext), _port(port), _eventCb(nullptr)
         {
             _acceptor.bind(_port);
         }
 
         void launch() {
-            _acceptor.accept<TCPSocket>([&](const std::shared_ptr<ISocket> &socket) {
+            _acceptor.accept<TCPSocket>([&](const std::shared_ptr<ISocket>& socket) {
                 if (_eventCb)
                     _eventCb("Accepted new session: " + std::to_string(reinterpret_cast<long>(socket.get())));
                 acceptSession(socket);
@@ -58,7 +58,7 @@ namespace net {
         }
 
     private:
-        NetworkService &_ioContext;
+        NetworkService& _ioContext;
         TCPAcceptor _acceptor;
         std::vector<std::unique_ptr<Session>> _sessions;
         uint16_t _port;

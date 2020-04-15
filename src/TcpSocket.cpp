@@ -7,10 +7,10 @@
 #include "neuracom/TcpSocket.hpp"
 
 namespace net {
-    TCPSocket::TCPSocket(NetworkService &netService) : _socket(netService), _resolver(netService) {
+    TCPSocket::TCPSocket(NetworkService& netService) : _socket(netService), _resolver(netService) {
     }
 
-    bool TCPSocket::connect(int port, const std::string &ipAddr) {
+    bool TCPSocket::connect(uint16_t port, const std::string& ipAddr) {
         try {
             boost::asio::ip::tcp::resolver::query query(boost::asio::ip::tcp::v4(),
                                                         ipAddr, std::to_string(port));
@@ -24,7 +24,7 @@ namespace net {
         return true;
     }
 
-    void TCPSocket::setReceive(const std::function<void(const char *, size_t)> &recvCallback) {
+    void TCPSocket::setReceive(const std::function<void(const char*, size_t)>& recvCallback) {
         _recvCallback = recvCallback;
         _socket.async_read_some(boost::asio::buffer(_buffer, READ_SIZE),
                                 boost::bind(&TCPSocket::handleReceive, this,
@@ -32,7 +32,7 @@ namespace net {
                                             boost::asio::placeholders::bytes_transferred));
     }
 
-    void TCPSocket::setDisconnect(const std::function<void(ISocket *)> &discCallback) {
+    void TCPSocket::setDisconnect(const std::function<void(ISocket*)>& discCallback) {
         _discCallback = discCallback;
     }
 
@@ -41,7 +41,7 @@ namespace net {
             _discCallback(this);
     }
 
-    void TCPSocket::handleReceive(const boost::system::error_code &error, size_t bytes_transferred) {
+    void TCPSocket::handleReceive(const boost::system::error_code& error, size_t bytes_transferred) {
         if (!error) {
             _socket.async_read_some(boost::asio::buffer(_buffer, READ_SIZE),
                                     boost::bind(&TCPSocket::handleReceive, this,
@@ -57,9 +57,9 @@ namespace net {
         }
     }
 
-    size_t TCPSocket::send(const char *data, size_t len) {
+    size_t TCPSocket::send(const char* data, size_t len) {
         if (!_socket.is_open()) {
-            std::cerr << "TCPSocket: Socket must connect before send" << std::endl;
+            std::cerr << "TCPSocket: Socket is not open." << std::endl;
             return 0;
         }
         boost::asio::async_write(_socket, boost::asio::buffer(data, len),
@@ -68,11 +68,11 @@ namespace net {
         return len;
     }
 
-    size_t TCPSocket::send(const std::string &data) {
+    size_t TCPSocket::send(const std::string& data) {
         return send(data.data(), data.length());
     }
 
-    void TCPSocket::handleSend(const boost::system::error_code &error) {
+    void TCPSocket::handleSend(const boost::system::error_code& error) {
         if (error)
             std::cerr << "TCPSocket: " << error.message() << std::endl;
     }

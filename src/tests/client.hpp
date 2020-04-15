@@ -26,13 +26,13 @@ public:
     {
         _client.setEventCb([&](const std::string& eventMsg) { cout << eventMsg << endl; });
 
-        net::Client::CLIENT_MAP["success"] = [&](const Paramters& args) { cout << "Connected" << endl; return "success"; };
+        net::Client::CLIENT_MAP["pong"] = [&](const Paramters& args) { cout << "PONG" << endl; return "ping"; };
 
         std::thread t([&]() { _service.run(); });
 
         net::Client* client = _client.newClient(config::IP, config::PORT);
 
-        client->manualSend("connection\n");
+        client->manualSend("test\n");
 
         t.join();
     }

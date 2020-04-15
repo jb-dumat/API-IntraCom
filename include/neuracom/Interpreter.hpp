@@ -17,7 +17,7 @@ namespace net {
     class Interpreter
     {
     public:
-        explicit Interpreter(std::unordered_map<std::string, commandFunctor>& commandMap, bool caseInsensitive = true);
+        explicit Interpreter(std::unordered_map<std::string, commandFunctor>& commandMap);
         ~Interpreter() = default;
 
         Interpreter() = delete;
@@ -30,6 +30,5 @@ namespace net {
 
     private:
         std::unordered_map<std::string, commandFunctor>& _commandMap;
-        bool _caseInsensitive;
     };
 }
