@@ -13,27 +13,26 @@
 #include <functional>
 
 namespace net {
-    using commandFunctor = std::function<std::string(const std::vector<std::string>& params)>;
+	using commandFunctor = std::function<std::string(const std::vector<std::string>& params)>;
 
-    class Interpreter
-    {
-    public:
-        explicit Interpreter(std::unordered_map<std::string, commandFunctor>& commandMap);
-        ~Interpreter() = default;
+	class Interpreter {
+	public:
+		explicit Interpreter(std::unordered_map<std::string, commandFunctor>& commandMap);
 
-        Interpreter() = delete;
+		~Interpreter() = default;
 
-        static std::vector<std::string> stringToVector(std::string&& payload);
+		Interpreter() = delete;
 
-        static std::vector<std::string> parse(std::string&& str);
+		static std::vector<std::string> stringToVector(std::string&& payload);
 
-		template <typename... Args>
-		static std::string makePayload(const std::string& commandTag, Args&&... args)
-		{
+		static std::vector<std::string> parse(std::string&& str);
+
+		template<typename... Args>
+		static std::string makePayload(const std::string& commandTag, Args&& ... args) {
 			std::stringstream ss;
 
 			ss << commandTag;
-			std::initializer_list<int> {
+			std::initializer_list<int>{
 					(ss << " " << args, 0)...
 			};
 			return ss.str();
@@ -41,7 +40,7 @@ namespace net {
 
 		std::string interpret(std::vector<std::string>&& args);
 
-    private:
-        std::unordered_map<std::string, commandFunctor>& _commandMap;
-    };
+	private:
+		std::unordered_map<std::string, commandFunctor>& _commandMap;
+	};
 }
