@@ -24,8 +24,9 @@ public:
         : _service(),
           _server(_service, config::PORT)
     {
-        net::Session::SERVER_MAP["connection"] =  [&](const Parameters& args) { cout << "Connection..." << endl; return "success"; };
-        net::Session::SERVER_MAP["ping"] =  [&](const Parameters& args) { cout << "Ping..." << endl; return "pong"; };
+        net::Session::SERVER_MAP["ping"] =  [&](const Parameters& args) { cout << "PING" << endl; return "pong"; };
+
+        net::Session::SERVER_MAP["test"] =  [&](const Parameters& args) { cout << "TEST" << endl; return "success"; };
 
         _server.setEventCb([&](const std::string& eventMsg) { cout << eventMsg << endl; });
         _server.launch();

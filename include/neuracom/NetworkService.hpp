@@ -12,9 +12,9 @@ namespace net {
         using signalCallbackFn = std::function<void()>;
 
     public:
-        NetworkService(const signalCallbackFn &fnCallback = nullptr)
+        NetworkService(const signalCallbackFn& fnCallback = nullptr)
                 : boost::asio::io_service(), _signals(*this, SIGINT) {
-            _signals.async_wait([&, fnCallback](const boost::system::error_code &, int) {
+            _signals.async_wait([&, fnCallback](const boost::system::error_code&, int) {
                 if (fnCallback)
                     fnCallback();
                 this->stop();

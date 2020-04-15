@@ -6,7 +6,7 @@
 #include "neuracom/TcpAcceptor.hpp"
 
 namespace net {
-    TCPAcceptor::TCPAcceptor(NetworkService &netService) : _netService(netService), _acceptor(_netService) {
+    TCPAcceptor::TCPAcceptor(NetworkService& netService) : _netService(netService), _acceptor(_netService) {
 
     }
 
@@ -19,7 +19,7 @@ namespace net {
                             true)); // REUSE // FOR DEBUG ONLY // DON T DELETE PLEASE <3
             _acceptor.bind(endpoint);
             _acceptor.listen();
-        } catch (const std::runtime_error &error) {
+        } catch (const std::runtime_error& error) {
             return false;
         }
         return true;
