@@ -23,20 +23,20 @@ namespace net {
 
         TCPAcceptor() = delete;
 
-        TCPAcceptor(const TCPAcceptor &) = delete;
+        TCPAcceptor(const TCPAcceptor&) = delete;
 
-        TCPAcceptor(TCPAcceptor &&) = default;
+        TCPAcceptor(TCPAcceptor&&) = default;
 
-        TCPAcceptor &operator=(const TCPAcceptor &) = delete;
+        TCPAcceptor &operator=(const TCPAcceptor&) = delete;
 
-        TCPAcceptor &operator=(TCPAcceptor &&) = delete;
+        TCPAcceptor &operator=(TCPAcceptor&&) = delete;
 
         /*
          * Methods
          */
     public:
         template<typename T>
-        T *accept(const acceptCallback_t &callback);
+        T* accept(const acceptCallback_t& callback);
 
         bool bind(uint16_t);
 
@@ -46,16 +46,16 @@ namespace net {
          * Fields
          */
     private:
-        NetworkService &_netService;
+        NetworkService& _netService;
         boost::asio::ip::tcp::acceptor _acceptor;
     };
 
     template<>
-    inline TCPSocket *TCPAcceptor::accept(const acceptCallback_t &callback) {
+    inline TCPSocket *TCPAcceptor::accept(const acceptCallback_t& callback) {
         auto client = std::make_shared<TCPSocket>(_netService);
 
         _acceptor.async_accept(client->get(),
-                               [this, client, callback](const boost::system::error_code &error) {
+                               [this, client, callback](const boost::system::error_code& error) {
                                    if (error) {
                                        return;
                                    }

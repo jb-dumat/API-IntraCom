@@ -5,6 +5,7 @@
 #pragma once
 
 #include <string>
+#include <sstream>
 #include <vector>
 #include <unordered_map>
 #include <iostream>
@@ -17,7 +18,7 @@ namespace net {
     class Interpreter
     {
     public:
-        explicit Interpreter(std::unordered_map<std::string, commandFunctor>& commandMap, bool caseInsensitive = true);
+        explicit Interpreter(std::unordered_map<std::string, commandFunctor>& commandMap);
         ~Interpreter() = default;
 
         Interpreter() = delete;
@@ -26,10 +27,21 @@ namespace net {
 
         static std::vector<std::string> parse(std::string&& str);
 
-        std::string interpret(std::vector<std::string>&& args);
+		template <typename... Args>
+		static std::string makePayload(const std::string& commandTag, Args&&... args)
+		{
+			std::stringstream ss;
+
+			ss << commandTag;
+			std::initializer_list<int> {
+					(ss << " " << args, 0)...
+			};
+			return ss.str();
+		}
+
+		std::string interpret(std::vector<std::string>&& args);
 
     private:
         std::unordered_map<std::string, commandFunctor>& _commandMap;
-        bool _caseInsensitive;
     };
 }

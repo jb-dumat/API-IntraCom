@@ -9,8 +9,8 @@ namespace net {
 /*
  * Constructors & Destructors
  */
-    Interpreter::Interpreter(std::unordered_map<std::string, commandFunctor> &commandMap, bool caseInsensitive)
-            : _commandMap(commandMap), _caseInsensitive(caseInsensitive)
+    Interpreter::Interpreter(std::unordered_map<std::string, commandFunctor>& commandMap)
+            : _commandMap(commandMap)
     {
     }
 
@@ -28,16 +28,12 @@ namespace net {
     }
 
     std::string Interpreter::interpret(std::vector<std::string>&& args) {
-        const static std::string errResponse = "No command found";
-
-        if (_caseInsensitive && !args.empty()) {
-            std::transform(args.front().begin(), args.front().end(), args.front().begin(),
-                    [](unsigned char c) { return std::tolower(c); });
-        }
+        const static std::string errResponse = "failure";
 
         if (!args.empty() && _commandMap.find(args.at(0)) != _commandMap.end()) {
             return _commandMap[args.at(0)](args);
         }
+
         return errResponse;
     }
 }
