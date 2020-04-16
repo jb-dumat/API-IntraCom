@@ -39,12 +39,6 @@ namespace net {
 			return (arg.find(' ') != std::string::npos) ? ARGUMENT_WRAPPER + arg + ARGUMENT_WRAPPER : arg;
 		}
 
-		inline static std::string unwrap(std::string&& arg) {
-			return (arg.rfind(ARGUMENT_WRAPPER, 0) == 0 && boost::algorithm::ends_with(arg, ARGUMENT_WRAPPER))
-			       ? arg.substr(WRAPPER_LENGTH, arg.length() - WRAPPER_LENGTH * 2)
-			       : arg;
-		}
-
 		template<typename ... Args>
 		static std::string makePayload(const std::string& commandTag, Args&& ... args) {
 			std::stringstream ss;
