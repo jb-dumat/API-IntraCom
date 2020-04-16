@@ -16,8 +16,8 @@
 namespace net {
 	using commandFunctor = std::function<std::string(const std::vector<std::string>& params)>;
 
-	const char ARGUMENT_WRAPPER[] = "`";
-	const unsigned int WRAPPER_LENGTH = std::strlen(ARGUMENT_WRAPPER);
+	static const char ARGUMENT_WRAPPER[] = "`";
+	static const unsigned int WRAPPER_LENGTH = std::strlen(ARGUMENT_WRAPPER);
 
 	class Interpreter {
 	public:
