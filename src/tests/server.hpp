@@ -30,7 +30,10 @@ public:
 		};
 
 		net::Session::SERVER_MAP["test"] = [&](const Parameters& args) {
-			cout << "TEST" << endl;
+			cout << "TEST received! Here are the args:" << endl;
+			for (auto& arg : args) {
+				cout << "- " << arg << endl;
+			}
 			return "success";
 		};
 

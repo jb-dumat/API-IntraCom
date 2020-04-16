@@ -35,7 +35,7 @@ public:
 
 		net::Client* client = _client.newClient(config::IP, config::PORT);
 
-		client->manualSend("test\n");
+		client->manualSend("test", "arg", R"({"key": "like a JSON"})");
 
 		t.join();
 	}
