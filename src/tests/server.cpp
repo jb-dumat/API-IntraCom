@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include "neuracom/Interpreter.hpp"
 
 #include "server.hpp"
 
@@ -13,7 +14,6 @@ int main() {
 
 	try {
 		TestServer server;
-
 	} catch (const std::exception& e) {
 		cerr << "Runtime error: " << e.what() << endl;
 	}

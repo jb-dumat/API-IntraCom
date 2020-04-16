@@ -9,9 +9,9 @@ namespace net {
 /*
  * Constructors & Destructors
  */
-	Interpreter::Interpreter(std::unordered_map<std::string, commandFunctor>& commandMap, const std::string_view& wrapper)
-			: _commandMap(commandMap), _wrapper(wrapper) {
-	}
+	Interpreter::Interpreter(std::unordered_map<std::string, commandFunctor>& commandMap)
+			: _commandMap(commandMap)
+	{}
 
 
 /*
