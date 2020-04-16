@@ -35,7 +35,7 @@ namespace net {
 
 		static std::vector<std::string> parse(std::string&& str);
 
-		inline static std::string wrap(std::string&& arg) {
+		static std::string wrap(std::string&& arg) {
 			return (arg.find(' ') != std::string::npos) ? ARGUMENT_WRAPPER + arg + ARGUMENT_WRAPPER : arg;
 		}
 
