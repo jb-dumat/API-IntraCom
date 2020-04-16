@@ -5,12 +5,12 @@
 #ifndef NEURACOM_SERVER_HPP
 #define NEURACOM_SERVER_HPP
 
-#include <neuracom/NetworkService.hpp>
-#include <neuracom/SessionManager.hpp>
-#include <neuracom/Session.hpp>
+#include <string>
 #include <unordered_map>
 #include <vector>
-#include <string>
+#include <neuracom/NetworkService.hpp>
+#include <neuracom/Session.hpp>
+#include <neuracom/SessionManager.hpp>
 #include "config.hpp"
 
 std::unordered_map<std::string, std::function<std::string(const std::vector<std::string>&)>> net::Session::SERVER_MAP;

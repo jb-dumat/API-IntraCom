@@ -5,13 +5,13 @@
 #ifndef NEURACOM_CLIENT_HPP
 #define NEURACOM_CLIENT_HPP
 
-#include <neuracom/NetworkService.hpp>
-#include <neuracom/ClientManager.hpp>
-#include <neuracom/Client.hpp>
 #include <vector>
-#include <string>
-#include "config.hpp"
 #include <thread>
+#include <string>
+#include "neuracom/NetworkService.hpp"
+#include "neuracom/Client.hpp"
+#include "neuracom/ClientManager.hpp"
+#include "config.hpp"
 
 std::unordered_map<std::string, std::function<std::string(const std::vector<std::string>&)>> net::Client::CLIENT_MAP;
 
