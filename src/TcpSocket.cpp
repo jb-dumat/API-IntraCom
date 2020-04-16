@@ -7,8 +7,10 @@
 #include "neuracom/TcpSocket.hpp"
 
 namespace net {
-	TCPSocket::TCPSocket(NetworkService& netService) : _socket(netService), _resolver(netService) {
-	}
+	TCPSocket::TCPSocket(NetworkService& netService)
+		: _socket(netService), _resolver(netService), _buffer(""), _ipAddr(""),
+		  _port(0), _recvCallback(nullptr), _discCallback(nullptr)
+	{}
 
 	bool TCPSocket::connect(uint16_t port, const std::string& ipAddr) {
 		try {

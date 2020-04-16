@@ -57,9 +57,9 @@ namespace net {
 		boost::asio::ip::tcp::socket _socket;
 		boost::asio::ip::tcp::resolver _resolver;
 		char _buffer[READ_SIZE + 1];
-		std::function<void(const char*, size_t)> _recvCallback;
-		std::function<void(TCPSocket*)> _discCallback;
 		std::string _ipAddr;
 		uint16_t _port;
+		std::function<void(const char*, size_t)> _recvCallback;
+		std::function<void(TCPSocket*)> _discCallback;
 	};
 }
