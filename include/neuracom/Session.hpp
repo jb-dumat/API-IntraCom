@@ -76,6 +76,11 @@ namespace net {
 			_socket->send(msg);
 		}
 
+		template<typename ... Args>
+		void manualSend(const std::string& commandName, Args&& ... args) {
+			_socket->send(_interpreter.makePayload(commandName, args...));
+		}
+
 		static std::unordered_map<std::string, net::commandFunctor> SERVER_MAP;
 
 	private:

@@ -19,7 +19,7 @@ namespace net {
 	class Client {
 	public:
 		explicit Client(NetworkService& ioContext, const std::string& ip, uint16_t port, bool waitConnection = true)
-				: _ioContext(ioContext), _socket(_ioContext), _inter(CLIENT_MAP), _eventCb(nullptr) {
+				: _ioContext(ioContext), _socket(_ioContext), _interpreter(CLIENT_MAP), _eventCb(nullptr) {
 			if (waitConnection)
 				this->loopUntilConnected(ip, port);
 			_socket.setReceive([&](const char* data, size_t size) { handleReceive(data, size); });
@@ -27,7 +27,7 @@ namespace net {
 
 		explicit Client(NetworkService& ioContext, const std::string& ip, uint16_t port,
 						std::function<void(const std::string&)>&& eventCb, bool waitConnection = true)
-				: _ioContext(ioContext), _socket(_ioContext), _inter(CLIENT_MAP), _eventCb(std::move(eventCb)) {
+				: _ioContext(ioContext), _socket(_ioContext), _interpreter(CLIENT_MAP), _eventCb(std::move(eventCb)) {
 			if (waitConnection)
 				this->loopUntilConnected(ip, port);
 			_socket.setReceive([&](const char* data, size_t size) { handleReceive(data, size); });
@@ -41,7 +41,7 @@ namespace net {
 
 			// Interpret the response
 			auto&& args = net::Interpreter::parse(std::move(msg));
-			auto&& response = _inter.interpret(std::move(args));
+			auto&& response = _interpreter.interpret(std::move(args));
 
 			if (response == "success")
 				return;
@@ -57,8 +57,13 @@ namespace net {
 			_socket.send(response);
 		}
 
-		void manualSend(const std::string& msg) {
+		inline void manualSend(const std::string& msg) {
 			_socket.send(msg);
+		}
+
+		template<typename ... Args>
+		inline void manualSend(const std::string& commandName, Args&& ... args) {
+			_socket.send(_interpreter.makePayload(commandName, args...));
 		}
 
 		static std::unordered_map<std::string, commandFunctor> CLIENT_MAP;
@@ -72,7 +77,7 @@ namespace net {
 
 		NetworkService& _ioContext;
 		TCPSocket _socket;
-		Interpreter _inter;
+		Interpreter _interpreter;
 		std::function<void(const std::string&)> _eventCb;
 	};
 }

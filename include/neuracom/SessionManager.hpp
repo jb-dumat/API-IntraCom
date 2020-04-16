@@ -56,6 +56,13 @@ namespace net {
 			}
 		}
 
+		template<typename ... Args>
+		void sendAll(const std::string& commandName, Args&& ... args) {
+			for (auto& session : _sessions) {
+				session->manualSend(commandName, args...);
+			}
+		}
+
 	private:
 		NetworkService& _ioContext;
 		TCPAcceptor _acceptor;
