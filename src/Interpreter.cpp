@@ -2,7 +2,8 @@
 // Created by Jean-Baptiste Dumat.
 //
 
-#include <neuracom/Session.hpp>
+#include <iomanip>
+#include "neuracom/Session.hpp"
 #include "neuracom/Interpreter.hpp"
 
 namespace net {
@@ -19,8 +20,14 @@ namespace net {
  */
 	std::vector<std::string> Interpreter::stringToVector(std::string&& payload) {
 		std::istringstream iss(payload);
-		return std::vector<std::string>(std::istream_iterator<std::string>{iss},
-		                                std::istream_iterator<std::string>());
+		std::vector<std::string> vec;
+		std::string str;
+
+		while (iss >> std::quoted(str, '`')) {
+			vec.push_back(str);
+		}
+
+		return vec;
 	}
 
 	std::vector<std::string> Interpreter::parse(std::string&& str) {
