@@ -51,13 +51,13 @@ namespace net {
 
 			ss << commandTag;
 			std::initializer_list<int>{
-					(ss << " " << formatPayload(args), 0)...
+					(ss << " " << formatPayloadArg(args), 0)...
 			};
 			return ss.str();
 		}
 
 		template<typename T>
-		static std::string formatPayload(T&& arg) {
+		static std::string formatPayloadArg(T&& arg) {
 			std::string str;
 			std::stringstream ss;
 
